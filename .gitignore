@@ -1,0 +1,34 @@
+# OS 파일
+.DS_Store
+Thumbs.db
+
+# VSCode 설정
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# 의존성 패키지
+node_modules/
+jspm_packages/
+
+# 환경변수 및 보안 파일
+.env
+.env.local
+.env.*.local
+secret.json
+
+# 빌드 결과물
+dist/
+build/
+out/
+
+# 로그 및 디버그
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# 커버리지 보고서
+coverage/
