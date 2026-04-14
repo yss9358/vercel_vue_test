@@ -9,7 +9,7 @@ export const connectDB = async () => {
 
   //. env에서 값을 읽어 옴
   // const config = useRuntimeConfig()
-  const mongodbUri = process.env.MONGODB_URI 
+  const mongodbUri = String(process.env.MONGODB_URI) 
   console.log(mongodbUri);
   try {
     await mongoose.connect(mongodbUri, {

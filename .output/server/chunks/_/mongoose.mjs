@@ -5,7 +5,7 @@ const connectDB = async () => {
   if (isConnected) {
     return;
   }
-  const mongodbUri = process.env.MONGODB_URI;
+  const mongodbUri = String(process.env.MONGODB_URI);
   console.log(mongodbUri);
   try {
     await mongoose.connect(mongodbUri, {
