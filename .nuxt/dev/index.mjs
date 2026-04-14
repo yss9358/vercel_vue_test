@@ -3008,11 +3008,7 @@ const connectDB = async () => {
   if (isConnected) {
     return;
   }
-  const config = useRuntimeConfig();
-  const mongodbUri = config.mongodbUri;
-  if (!mongodbUri) {
-    throw new Error("MONGODB_URI is undefined");
-  }
+  const mongodbUri = process.env.MONGODB_URI;
   console.log(mongodbUri);
   try {
     await mongoose.connect(mongodbUri, {
