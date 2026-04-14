@@ -1,3 +1,4 @@
+import { u as useRuntimeConfig } from './nitro.mjs';
 import mongoose from 'mongoose';
 
 let isConnected = false;
@@ -5,7 +6,11 @@ const connectDB = async () => {
   if (isConnected) {
     return;
   }
-  const mongodbUri = String(process.env.MONGODB_URI);
+  const config = useRuntimeConfig();
+  const mongodbUri = config.mongodbUri;
+  if (!mongodbUri) {
+    throw new Error("MONGODB_URI is undefined");
+  }
   console.log(mongodbUri);
   try {
     await mongoose.connect(mongodbUri, {
