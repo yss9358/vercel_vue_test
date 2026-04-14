@@ -8,12 +8,8 @@ export const connectDB = async () => {
   }
 
   //. env에서 값을 읽어 옴
-  const config = useRuntimeConfig()
-  const mongodbUri = config.MONGODB_URI
-  // const mongodbUri = config.mongodbUri
-  // if (!mongodbUri) {
-  //   throw new Error('MONGODB_URI is undefined');
-  // } 
+  // const config = useRuntimeConfig()
+  const mongodbUri = process.env.MONGODB_URI
   console.log(mongodbUri);
   try {
     await mongoose.connect(mongodbUri, {
