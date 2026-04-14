@@ -2,6 +2,7 @@ import { verifyToken } from '../utils/jwt';
 
 //defineEventHandler는 H3 라이브러리에 포함된 함수로 서버 요청 하나당 실행되는 함수
 //event는 요청/응답 관련 모든 정보가 들어있는 객체
+//JWT 기반 인증 체크
 export default defineEventHandler((event) => { 
   //const url = event.node.req.url;
   //요청 URL에서 경로(pathname)만 가져옴. 예) 

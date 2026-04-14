@@ -14,9 +14,6 @@ import 'mongoose';
 const connectionTest = defineEventHandler(async () => {
   try {
     await connectDB();
-    console.log("=================");
-    console.log("db\uC5F0\uACB0");
-    console.log("=================");
     return { success: true, message: "MongoDB \uC5F0\uACB0 \uC131\uACF5!" };
   } catch (error) {
     return { success: false, message: error.message };

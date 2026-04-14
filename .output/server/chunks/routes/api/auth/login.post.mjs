@@ -27,14 +27,14 @@ const login_post = defineEventHandler(async (event) => {
     if (!user) {
       return {
         success: false,
-        error: "\uC544\uC774\uB514 \uB610\uB294 \uBE44\uBC00\uBC88\uD638\uAC00 \uC77C\uCE58\uD558\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4."
+        error: "\uC544\uC774\uB514\uAC00 \uC77C\uCE58\uD558\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4."
       };
     }
     const isValid = await bcrypt.compare(body.password, user.password);
     if (!isValid) {
       return {
         success: false,
-        error: "\uC544\uC774\uB514 \uB610\uB294 \uBE44\uBC00\uBC88\uD638\uAC00 \uC77C\uCE58\uD558\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4."
+        error: "\uBE44\uBC00\uBC88\uD638\uAC00 \uC77C\uCE58\uD558\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4."
       };
     }
     const token = generateToken({
@@ -43,7 +43,7 @@ const login_post = defineEventHandler(async (event) => {
     });
     setCookie(event, "auth_token", token, {
       httpOnly: false,
-      secure: true,
+      //secure: "production" === 'production',
       maxAge: 60 * 60 * 24,
       path: "/"
     });

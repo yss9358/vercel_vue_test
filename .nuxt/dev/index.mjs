@@ -652,7 +652,8 @@ const _inlineRuntimeConfig = {
     }
   },
   "public": {},
-  "mongodbUri": "mongodb://admin:12345@ac-a5aloqu-shard-00-00.k5lqzri.mongodb.net:27017,ac-a5aloqu-shard-00-01.k5lqzri.mongodb.net:27017,ac-a5aloqu-shard-00-02.k5lqzri.mongodb.net:27017/?ssl=true&replicaSet=atlas-lu0hbe-shard-0&authSource=admin&appName=nuxt-board"
+  "mongodbUri": "mongodb://admin:12345@ac-a5aloqu-shard-00-00.k5lqzri.mongodb.net:27017,ac-a5aloqu-shard-00-01.k5lqzri.mongodb.net:27017,ac-a5aloqu-shard-00-02.k5lqzri.mongodb.net:27017/?ssl=true&replicaSet=atlas-lu0hbe-shard-0&authSource=admin&appName=nuxt-board",
+  "jwt_secret": "your-secret-key-change-this-in-production"
 };
 const envOptions = {
   prefix: "NITRO_",
@@ -698,9 +699,9 @@ new Proxy(/* @__PURE__ */ Object.create(null), {
   }
 });
 
-const config = useRuntimeConfig();
+const config$1 = useRuntimeConfig();
 const _routeRulesMatcher = toRouteMatcher(
-  createRouter({ routes: config.nitro.routeRules })
+  createRouter({ routes: config$1.nitro.routeRules })
 );
 function createRouteRulesHandler(ctx) {
   return eventHandler((event) => {
@@ -2224,7 +2225,8 @@ const _Cn6fXf = eventHandler((event) => {
   return readAsset(id);
 });
 
-const JWT_SECRET = process.env.JWT_SECRET;
+const config = useRuntimeConfig();
+const JWT_SECRET = config.jwt_secret;
 const generateToken = (payload) => {
   return jwt.sign(payload, JWT_SECRET, { expiresIn: "24h" });
 };
@@ -3008,10 +3010,9 @@ const connectDB = async () => {
   if (isConnected) {
     return;
   }
-  const mongodbUri = process.env.MONGODB_URI;
-  console.log(mongodbUri);
+  const config = useRuntimeConfig();
   try {
-    await mongoose.connect(mongodbUri, {
+    await mongoose.connect(config.mongodbUri, {
       dbName: "nuxt-board"
     });
     isConnected = true;
@@ -3049,14 +3050,14 @@ const login_post = defineEventHandler(async (event) => {
     if (!user) {
       return {
         success: false,
-        error: "\uC544\uC774\uB514 \uB610\uB294 \uBE44\uBC00\uBC88\uD638\uAC00 \uC77C\uCE58\uD558\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4."
+        error: "\uC544\uC774\uB514\uAC00 \uC77C\uCE58\uD558\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4."
       };
     }
     const isValid = await bcrypt.compare(body.password, user.password);
     if (!isValid) {
       return {
         success: false,
-        error: "\uC544\uC774\uB514 \uB610\uB294 \uBE44\uBC00\uBC88\uD638\uAC00 \uC77C\uCE58\uD558\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4."
+        error: "\uBE44\uBC00\uBC88\uD638\uAC00 \uC77C\uCE58\uD558\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4."
       };
     }
     const token = generateToken({
@@ -3065,7 +3066,7 @@ const login_post = defineEventHandler(async (event) => {
     });
     setCookie(event, "auth_token", token, {
       httpOnly: false,
-      secure: false,
+      //secure: "development" === 'production',
       maxAge: 60 * 60 * 24,
       path: "/"
     });
@@ -3368,9 +3369,6 @@ const boards$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
 const connectionTest = defineEventHandler(async () => {
   try {
     await connectDB();
-    console.log("=================");
-    console.log("db\uC5F0\uACB0");
-    console.log("=================");
     return { success: true, message: "MongoDB \uC5F0\uACB0 \uC131\uACF5!" };
   } catch (error) {
     return { success: false, message: error.message };

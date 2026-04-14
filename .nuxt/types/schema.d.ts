@@ -13,6 +13,8 @@ import { NuxtModule, ModuleDependencyMeta } from '@nuxt/schema'
 
    mongodbUri: string,
 
+   jwt_secret: string,
+
    nitro: {
       envPrefix: string,
    },

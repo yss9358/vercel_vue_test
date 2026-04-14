@@ -1,3 +1,4 @@
+import { u as useRuntimeConfig } from './nitro.mjs';
 import mongoose from 'mongoose';
 
 let isConnected = false;
@@ -5,10 +6,9 @@ const connectDB = async () => {
   if (isConnected) {
     return;
   }
-  const mongodbUri = process.env.MONGODB_URI;
-  console.log(mongodbUri);
+  const config = useRuntimeConfig();
   try {
-    await mongoose.connect(mongodbUri, {
+    await mongoose.connect(config.mongodbUri, {
       dbName: "nuxt-board"
     });
     isConnected = true;

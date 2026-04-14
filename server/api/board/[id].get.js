@@ -31,11 +31,14 @@ export default defineEventHandler(async (event) => {
     }
     
     // 이전 게시물 (현재보다 이전에 작성된 글)
+    //$lt --> less than 
+    //select _id from Board where regdate < board.regdate order by regdate desc
     const prev = await Board.findOne({ regdate: { $lt: board.regdate } }) 
       .sort({ regdate: -1 })
-      .select('_id')
+      .select('_id')    
     
     // 다음 게시물 (현재보다 이후에 작성된 글)
+    //$gt --> greater than 
     const next = await Board.findOne({ regdate: { $gt: board.regdate } })
       .sort({ regdate: 1 })
       .select('_id')
